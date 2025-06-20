@@ -4,9 +4,7 @@
  * Include any dynamic or error routes as necessary.
  * @type {string[]}
  */
-export const publicRoutes: string[] = [
-  '/', // Home page
-]
+export const publicRoutes: string[] = []
 
 /**
  * An array of routes that are used for authentication.
@@ -17,8 +15,6 @@ export const authRoutes: string[] = [
   '/signin', // Sign-in page
   '/signup', // Sign-up page
   '/error', // Generic error page
-  '/new-password', // New password setup
-  '/reset-password', // Uncomment if reset password page is required
 ]
 
 /**

@@ -158,3 +158,54 @@
     @apply bg-background text-foreground;
   }
 }
+
+.hide-scrollbar::-webkit-scrollbar {
+  scroll-behavior: smooth;
+  display: none;
+}
+
+/* Framer Button */
+.radial-gradient {
+  background: var(--pc-500);
+  transition: all 0.2s ease-in;
+}
+
+.radial-gradient:hover {
+  background: var(--pc-500);
+  opacity: 0.7;
+}
+
+.linear-mask {
+  -webkit-mask-image: linear-gradient(
+    -75deg,
+    white calc(var(--x) + 20%),
+    transparent calc(var(--x) + 30%),
+    white calc(var(--x) + 100%)
+  );
+
+  mask-image: linear-gradient(
+    -75deg,
+    white calc(var(--x) + 20%),
+    transparent calc(var(--x) + 30%),
+    white calc(var(--x) + 100%)
+  );
+}
+
+.linear-overlay {
+  background: linear-gradient(
+    -75deg,
+    var(--pc-500) calc(var(--x) + 20%),
+    rgb(255, 255, 255) calc(var(--x) + 25%),
+    var(--pc-500) calc(var(--x) + 100%)
+  );
+
+  -webkit-mask:
+    linear-gradient(black, black) content-box,
+    linear-gradient(black, black);
+  mask:
+    linear-gradient(black, black) content-box,
+    linear-gradient(black, black);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+}
