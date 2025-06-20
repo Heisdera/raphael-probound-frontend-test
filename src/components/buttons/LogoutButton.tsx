@@ -3,7 +3,7 @@
 import { Loader2, LogOut } from 'lucide-react'
 import { signOut } from 'next-auth/react'
 import { useTransition } from 'react'
-import { Button } from './ui/button'
+import { Button } from '../ui/button'
 
 export const LogoutButton = () => {
   const [isPending, startTransition] = useTransition()

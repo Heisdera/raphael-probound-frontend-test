@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <html lang="en">
-        <body className={`${soraSansSerif.className} antialiased`}>
+        <body className={`${soraSansSerif.className} bg-white antialiased`}>
           {children}
         </body>
       </html>

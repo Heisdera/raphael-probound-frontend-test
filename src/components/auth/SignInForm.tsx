@@ -4,9 +4,9 @@ import { signInSchema } from '@/schemas/auth'
 import { UserSignIn } from '@/types/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
+import { useState, useTransition } from 'react'
 import { useForm } from 'react-hook-form'
-import LoadingButton from '../LoadingButton'
+import LoadingButton from '../buttons/LoadingButton'
 import {
   Form,
   FormControl,
@@ -18,9 +18,17 @@ import {
 import { Input } from '../ui/input'
 import { CardWrapper } from './CardWrapper'
 import Link from 'next/link'
+import { useRouter, useSearchParams } from 'next/navigation'
+import { DEFAULT_SIGNIN_REDIRECT } from '@/routes'
+import { handleCredentialsSignin } from '@/app/actions/auth'
 
 export const SignInForm = () => {
+  const [isPending, startTransition] = useTransition()
   const [showPassword, setShowPassword] = useState(false)
+  const searchParams = useSearchParams()
+  const router = useRouter()
+
+  const callbackUrl = searchParams.get('callbackUrl') || DEFAULT_SIGNIN_REDIRECT
 
   const form = useForm<UserSignIn>({
     resolver: zodResolver(signInSchema),
@@ -32,6 +40,22 @@ export const SignInForm = () => {
 
   const onSubmit = (formData: UserSignIn) => {
     console.log('Form submitted:', formData)
+
+    startTransition(() => {
+      handleCredentialsSignin({ ...formData, callbackUrl })
+        .then((res) => {
+          if (res.success) {
+            console.log('Form submitted:', formData)
+
+            form.reset()
+            form.clearErrors()
+            router.push(res.callbackUrl || DEFAULT_SIGNIN_REDIRECT) // Redirect after successful sign-in
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+    })
   }
 
   return (
@@ -112,7 +136,10 @@ export const SignInForm = () => {
             )}
           />
 
-          <LoadingButton pending={form.formState.isSubmitting} text="Sign in" />
+          <LoadingButton
+            pending={form.formState.isSubmitting || isPending}
+            text="Sign in"
+          />
         </form>
       </Form>
     </CardWrapper>

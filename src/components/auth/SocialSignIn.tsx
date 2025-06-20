@@ -1,9 +1,15 @@
 'use client'
 
+import { handleGoogleSignIn } from '@/app/actions/auth'
 import { Button } from '@/components/ui/button'
+import { DEFAULT_SIGNIN_REDIRECT } from '@/routes'
 import Image from 'next/image'
+import { useSearchParams } from 'next/navigation'
 
 export default function SocialSignIn() {
+  const searchParams = useSearchParams()
+  const callbackUrl = searchParams.get('callbackUrl') || DEFAULT_SIGNIN_REDIRECT
+
   return (
     <div className="space-y-2">
       <div className="grid w-full grid-cols-3 items-center justify-between">
@@ -13,7 +19,7 @@ export default function SocialSignIn() {
       </div>
 
       <div className="w-full space-y-3">
-        <form>
+        <form action={() => handleGoogleSignIn(callbackUrl)}>
           <Button variant="outline" className="h-10 w-full" type="submit">
             <Image
               src="/images/google-logo.png"

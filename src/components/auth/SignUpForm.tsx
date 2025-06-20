@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Eye, EyeOff } from 'lucide-react'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import LoadingButton from '../LoadingButton'
 import { PhoneNumberInput } from '../PhoneNumberInput'
 import {
   Form,
@@ -18,10 +17,16 @@ import {
 } from '../ui/form'
 import { Input } from '../ui/input'
 import { CardWrapper } from './CardWrapper'
+import LoadingButton from '../buttons/LoadingButton'
+import VerificationNotice from './VerificationNotice'
+import { useRouter } from 'next/navigation'
 
 export const SignUpForm = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [signUpSuccess, setSignUpSuccess] = useState(false)
+  const [userEmail, setUserEmail] = useState('')
+  const router = useRouter()
 
   const form = useForm<UserSignUp>({
     resolver: zodResolver(SignUpSchema),
@@ -36,7 +41,22 @@ export const SignUpForm = () => {
   })
 
   const onSubmit = async (formData: UserSignUp) => {
+    await new Promise((resolve) => setTimeout(resolve, 3000))
+
     console.log('Form submitted:', formData)
+    setUserEmail(formData.email)
+    setSignUpSuccess(true)
+    form.reset()
+    form.clearErrors()
+  }
+
+  if (signUpSuccess) {
+    return (
+      <VerificationNotice
+        email={userEmail}
+        onBackToLogin={() => router.push('/signin')}
+      />
+    )
   }
 
   return (

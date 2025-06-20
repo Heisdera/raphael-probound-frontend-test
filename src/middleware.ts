@@ -33,9 +33,11 @@ export default auth((req) => {
 
   // Redirect unauthenticated users from protected routes
   if (!isLoggedIn && !isPublicRoute) {
-    const callbackUrl = nextUrl.toString()
     return NextResponse.redirect(
-      new URL(`/signin?callbackUrl=${encodeURIComponent(callbackUrl)}`, nextUrl)
+      new URL(
+        `/signin?callbackUrl=${encodeURIComponent(DEFAULT_SIGNIN_REDIRECT)}`,
+        nextUrl
+      )
     )
   }
 
