@@ -24,9 +24,7 @@ This project is a modern authentication flow UI for ProBound, built with Next.js
 
 ## Packages Used
 
-Based on the UI and Next.js conventions, the following packages are likely used:
-
-- **next** – React framework for SSR/SSG
+- **next.js** – React framework for SSR/SSG/CSR
 - **react** & **react-dom** – Core React libraries
 - **next-auth** – Authentication (Credentials & Google OAuth)
 - **@hookform/resolvers** & **react-hook-form** – Form state management and validation
@@ -48,7 +46,7 @@ Based on the UI and Next.js conventions, the following packages are likely used:
 
 1. **Clone the repository:**
    ```bash
-   git clone <repo-url>
+   git clone https://github.com/Heisdera/raphael-probound-frontend-test
    cd raphael-probound-frontend-test
    ```
 
